@@ -17,15 +17,40 @@ while (continueLoop)
         //if input contains any of the following characters, it will return the corresponding operation (+, -, *, /)
         if(input == "+" || input == "-" || input == "*" || input == "/")
         {
-            IPerformCalculation calculation = input switch
+            try
             {
-                "+" => new Addition(),
-                "-" => new Subtraction(),
-                "*" => new Multiplication(),
-                "/" => new Division(),
-                _ => throw new InvalidOperationException("Invalid operation")
-            };
-            Console.WriteLine(calculation.PerformCalculation(f1, f2));
+                Console.WriteLine("Enter first number");
+                f1 = Convert.ToDecimal(Console.ReadLine());
+                Console.WriteLine("Enter second number");
+                f2 = Convert.ToDecimal(Console.ReadLine());
+                IPerformCalculation calculation = input switch
+                {
+                    "+" => new Addition(),
+                    "-" => new Subtraction(),
+                    "*" => new Multiplication(),
+                    "/" => new Division(),
+                    _ => throw new InvalidOperationException("Invalid operation")
+                };
+                Console.WriteLine(calculation.PerformCalculation(f1, f2));
+            }
+            catch (FormatException e)
+
+            {
+                Console.WriteLine(e.GetType());
+                Console.WriteLine("Only numbers (0-9) are allowed! Retry?");
+
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine(e.GetType());
+                Console.WriteLine("Division by zero is not allowed! Retry?");
+            }
+            catch (Exception e)
+            {
+               
+                Console.WriteLine("An error occurred! Retry?");
+                
+            }
         }
         else if(input == "exit")
         {
